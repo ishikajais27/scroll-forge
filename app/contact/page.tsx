@@ -1,129 +1,293 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import Image from 'next/image'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import {
+  ScrollAnimatedText,
+  ScrollAnimatedSection,
+  Card3D,
+} from '@/components/scroll-animated-text'
+
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 35, damping: 30 })
+
+  return (
+    <motion.div
+      style={{ scaleX, transformOrigin: 'left' }}
+      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-white/30 via-white to-white/30 z-[60]"
+    />
+  )
+}
 
 export default function Contact() {
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="relative text-white min-h-screen">
+      <ScrollProgressBar />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-24 md:pt-48 md:pb-32">
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
-        </div>
-
-        <div className="container mx-auto px-4 md:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="text-white/50 text-lg uppercase tracking-widest mb-4">
+      {/* Hero */}
+      <section className="relative min-h-[60vh] flex items-center justify-center pt-20">
+        <div className="container mx-auto px-4 md:px-8 text-center">
+          <ScrollAnimatedSection>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+                scale: 0.8,
+                rotateX: 25,
+                filter: 'blur(12px)',
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                filter: 'blur(0px)',
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.2,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="text-white/50 uppercase tracking-[0.4em] text-xs mb-6 font-sans"
+            >
               Let's Talk
-            </p>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Get In Touch
+            </motion.p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 text-smooth">
+              <ScrollAnimatedText animation="infinite-motion" delay={0.3}>
+                Get In
+              </ScrollAnimatedText>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/50 gradient-text-animated">
+                <ScrollAnimatedText animation="infinite-motion" delay={0.5}>
+                  Touch
+                </ScrollAnimatedText>
+              </span>
             </h1>
-            <p className="text-xl text-white/70 max-w-3xl">
-              Have a project in mind? We'd love to hear from you. Drop us a line
-              and let's create something amazing together.
-            </p>
-          </motion.div>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+                scale: 0.8,
+                rotateX: 25,
+                filter: 'blur(12px)',
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                filter: 'blur(0px)',
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.8,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="text-sm md:text-base text-white/60 max-w-md mx-auto leading-relaxed"
+            >
+              Have a project in mind? Let's create something amazing.
+            </motion.p>
+          </ScrollAnimatedSection>
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="py-24 md:py-32">
+      {/* Form with 3D Card */}
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-2xl">
-            <motion.form
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div>
-                <label className="block text-sm font-medium mb-3">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none focus:bg-white/10 transition text-white placeholder:text-white/40"
-                />
-              </div>
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <ScrollAnimatedSection direction="left">
+              <Card3D depth={25}>
+                <div className="relative aspect-square overflow-hidden rounded-lg">
+                  <motion.div
+                    className="w-full h-full"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.6,
+                      rotateX: 35,
+                      filter: 'blur(15px)',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                      rotateX: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    <Image
+                      src="/images/contact-hero.jpg"
+                      alt="Contact Us"
+                      fill
+                      className="object-cover transition-transform duration-700 hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+              </Card3D>
+            </ScrollAnimatedSection>
 
-              <div>
-                <label className="block text-sm font-medium mb-3">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none focus:bg-white/10 transition text-white placeholder:text-white/40"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-3">
-                  Project Type
-                </label>
-                <select className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none focus:bg-white/10 transition text-white">
-                  <option value="">Select a project type</option>
-                  <option value="web">Web Design</option>
-                  <option value="app">App Development</option>
-                  <option value="branding">Branding</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-3">
-                  Project Details
-                </label>
-                <textarea
-                  placeholder="Tell us about your project..."
-                  rows={6}
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none focus:bg-white/10 transition text-white placeholder:text-white/40 resize-none"
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 rounded-lg bg-white text-black font-semibold hover:bg-white/90 transition"
-              >
-                Send Message
-              </motion.button>
-            </motion.form>
+            <ScrollAnimatedSection direction="right">
+              <Card3D depth={25}>
+                <motion.form
+                  className="p-6 space-y-5"
+                  initial={{
+                    opacity: 0,
+                    y: 40,
+                    scale: 0.9,
+                    rotateX: 15,
+                    filter: 'blur(10px)',
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    rotateX: 0,
+                    filter: 'blur(0px)',
+                  }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: -20, filter: 'blur(8px)' }}
+                    whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.1,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <label className="block text-sm font-medium mb-2">
+                      Name
+                    </label>
+                    <motion.input
+                      type="text"
+                      placeholder="Your name"
+                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none transition-all text-white placeholder:text-white/40 text-sm"
+                      whileFocus={{
+                        scale: 1.01,
+                        borderColor: 'rgba(255,255,255,0.3)',
+                      }}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20, filter: 'blur(8px)' }}
+                    whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.2,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <label className="block text-sm font-medium mb-2">
+                      Email
+                    </label>
+                    <motion.input
+                      type="email"
+                      placeholder="your@email.com"
+                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none transition-all text-white placeholder:text-white/40 text-sm"
+                      whileFocus={{
+                        scale: 1.01,
+                        borderColor: 'rgba(255,255,255,0.3)',
+                      }}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20, filter: 'blur(8px)' }}
+                    whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.3,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <label className="block text-sm font-medium mb-2">
+                      Message
+                    </label>
+                    <motion.textarea
+                      placeholder="Tell us about your project..."
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none transition-all text-white placeholder:text-white/40 resize-none text-sm"
+                      whileFocus={{
+                        scale: 1.01,
+                        borderColor: 'rgba(255,255,255,0.3)',
+                      }}
+                    />
+                  </motion.div>
+                  <motion.button
+                    type="submit"
+                    initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+                    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.4,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                    whileHover={{
+                      scale: 1.02,
+                      boxShadow: '0 20px 40px rgba(255,255,255,0.1)',
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full px-8 py-3 rounded-lg bg-white text-black font-semibold text-sm transition-all"
+                  >
+                    Send Message
+                  </motion.button>
+                </motion.form>
+              </Card3D>
+            </ScrollAnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Contact Info */}
-      <section className="py-24 md:py-32 border-t border-white/10">
+      {/* Contact Info with 3D Cards */}
+      <section className="py-12 border-t border-white/10">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { label: 'Email', value: 'hello@studio.com' },
               { label: 'Phone', value: '+1 (555) 123-4567' },
               { label: 'Location', value: 'San Francisco, CA' },
             ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <p className="text-white/50 text-sm mb-2">{item.label}</p>
-                <p className="text-lg font-semibold">{item.value}</p>
-              </motion.div>
+              <ScrollAnimatedSection key={index} delay={index * 0.1}>
+                <Card3D depth={10}>
+                  <motion.div
+                    className="p-4 text-center"
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                      scale: 0.8,
+                      rotateX: 25,
+                      filter: 'blur(12px)',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      rotateX: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{
+                      duration: 1,
+                      delay: index * 0.15,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <p className="text-white/50 text-xs mb-1 font-sans">
+                      {item.label}
+                    </p>
+                    <p className="font-medium text-sm">{item.value}</p>
+                  </motion.div>
+                </Card3D>
+              </ScrollAnimatedSection>
             ))}
           </div>
         </div>

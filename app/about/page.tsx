@@ -1,170 +1,233 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import Image from 'next/image'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import AnimatedSection from '@/components/animated-section'
+import {
+  ScrollAnimatedText,
+  ScrollAnimatedSection,
+  Card3D,
+} from '@/components/scroll-animated-text'
 
-export default function About() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-  })
-
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -300])
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 35, damping: 30 })
 
   return (
-    <div ref={containerRef} className="bg-black text-white min-h-screen">
+    <motion.div
+      style={{ scaleX, transformOrigin: 'left' }}
+      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-white/30 via-white to-white/30 z-[60]"
+    />
+  )
+}
+
+export default function About() {
+  return (
+    <div className="relative text-white min-h-screen">
+      <ScrollProgressBar />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-24 md:pt-48 md:pb-32 overflow-hidden">
-        <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
-        </motion.div>
-
-        <div className="container mx-auto px-4 md:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="text-white/50 text-lg uppercase tracking-widest mb-4">
-              About Us
-            </p>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Elevating Digital Experiences
-            </h1>
-            <p className="text-xl text-white/70 max-w-3xl leading-relaxed">
-              We are a team of designers, developers, and strategists dedicated
-              to creating digital experiences that inspire, engage, and drive
-              results.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="py-24 md:py-32">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <AnimatedSection>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8">Our Story</h2>
-              <div className="space-y-6 text-white/70 leading-relaxed">
-                <p>
-                  Founded in 2020, our studio emerged from a passion for pushing
-                  the boundaries of what's possible in digital design. We
-                  started with a simple mission: create experiences that matter.
-                </p>
-                <p>
-                  What began as a small team of freelancers quickly evolved into
-                  a full-service creative studio. Today, we work with ambitious
-                  brands and innovative startups to transform their visions into
-                  compelling digital experiences.
-                </p>
-                <p>
-                  Every project we undertake is guided by our core principles:
-                  attention to detail, commitment to innovation, and a
-                  relentless focus on impact.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="aspect-square rounded-2xl bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center"
+      {/* Hero */}
+      <section className="relative min-h-[60vh] flex items-center justify-center pt-20">
+        <div className="container mx-auto px-4 md:px-8 text-center">
+          <ScrollAnimatedSection>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+                scale: 0.8,
+                rotateX: 25,
+                filter: 'blur(12px)',
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                filter: 'blur(0px)',
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.2,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="text-white/50 uppercase tracking-[0.4em] text-xs mb-6 font-sans"
             >
-              <div className="text-white/30 font-bold text-6xl">2020</div>
-            </motion.div>
-          </div>
+              About Us
+            </motion.p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 text-smooth">
+              <ScrollAnimatedText animation="infinite-motion" delay={0.3}>
+                Elevating Digital
+              </ScrollAnimatedText>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/50 gradient-text-animated">
+                <ScrollAnimatedText animation="infinite-motion" delay={0.5}>
+                  Experiences
+                </ScrollAnimatedText>
+              </span>
+            </h1>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+                scale: 0.8,
+                rotateX: 25,
+                filter: 'blur(12px)',
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                filter: 'blur(0px)',
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.8,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="text-sm md:text-base text-white/60 max-w-md mx-auto leading-relaxed"
+            >
+              Designers and developers creating experiences that inspire.
+            </motion.p>
+          </ScrollAnimatedSection>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-24 md:py-32">
+      {/* Story with 3D Card */}
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-8">
-          <AnimatedSection className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Team</h2>
-            <p className="text-white/60 text-lg">
-              Talented individuals united by passion and purpose.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['Design Lead', 'Creative Director', 'Tech Lead'].map(
-              (role, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="group"
-                >
-                  <div className="aspect-square rounded-2xl bg-gradient-to-br from-white/20 to-white/5 mb-6 overflow-hidden">
-                    <motion.div
-                      className="w-full h-full flex items-center justify-center text-white/40 font-bold text-4xl group-hover:text-white/60 transition"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {index + 1}
-                    </motion.div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">
-                    Team Member {index + 1}
-                  </h3>
-                  <p className="text-white/60 text-sm mb-4">{role}</p>
-                  <p className="text-white/50 text-sm leading-relaxed">
-                    Passionate creative professional with years of expertise in
-                    delivering exceptional work.
-                  </p>
-                </motion.div>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-24 md:py-32">
-        <div className="container mx-auto px-4 md:px-8">
-          <AnimatedSection className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold">Our Values</h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                title: 'Innovation',
-                desc: 'We constantly explore new technologies and approaches to stay ahead.',
-              },
-              {
-                title: 'Quality',
-                desc: 'Every detail matters. We obsess over excellence in everything we do.',
-              },
-              {
-                title: 'Collaboration',
-                desc: 'Great work happens when we work closely with our clients.',
-              },
-              {
-                title: 'Impact',
-                desc: 'We measure success by the real-world results our work achieves.',
-              },
-            ].map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="p-8 rounded-2xl border border-white/10 hover:border-white/30 transition"
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <ScrollAnimatedSection direction="left">
+              <ScrollAnimatedText
+                as="h2"
+                className="text-2xl md:text-3xl font-bold mb-4"
+                animation="infinite-motion"
               >
-                <h3 className="text-2xl font-bold mb-3">{value.title}</h3>
-                <p className="text-white/60 leading-relaxed">{value.desc}</p>
-              </motion.div>
+                Our Story
+              </ScrollAnimatedText>
+              <motion.p
+                className="text-white/60 text-sm leading-relaxed"
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                  scale: 0.9,
+                  filter: 'blur(10px)',
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: 'blur(0px)',
+                }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{
+                  duration: 1,
+                  delay: 0.2,
+                  ease: [0.23, 1, 0.32, 1],
+                }}
+              >
+                Founded in 2020, we emerged from a passion for pushing
+                boundaries in digital design. What began as freelancers evolved
+                into a full-service creative studio.
+              </motion.p>
+            </ScrollAnimatedSection>
+            <ScrollAnimatedSection direction="right">
+              <Card3D depth={25}>
+                <div className="relative aspect-video overflow-hidden rounded-lg">
+                  <motion.div
+                    className="w-full h-full"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.6,
+                      rotateX: 35,
+                      filter: 'blur(15px)',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                      rotateX: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    <Image
+                      src="/images/about-story.jpg"
+                      alt="Our Story"
+                      fill
+                      className="object-cover transition-transform duration-700 hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <motion.span
+                      className="absolute inset-0 flex items-center justify-center text-white/20 font-bold text-6xl"
+                      whileHover={{
+                        scale: 1.1,
+                        color: 'rgba(255,255,255,0.3)',
+                      }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      2020
+                    </motion.span>
+                  </motion.div>
+                </div>
+              </Card3D>
+            </ScrollAnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Values with 3D Cards */}
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 md:px-8">
+          <ScrollAnimatedSection className="mb-10">
+            <ScrollAnimatedText
+              as="h2"
+              className="text-2xl md:text-3xl font-bold"
+              animation="infinite-motion"
+            >
+              Our Values
+            </ScrollAnimatedText>
+          </ScrollAnimatedSection>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: 'Innovation', desc: 'New technologies.' },
+              { title: 'Quality', desc: 'Every detail matters.' },
+              { title: 'Collaboration', desc: 'Working together.' },
+              { title: 'Impact', desc: 'Real results.' },
+            ].map((value, index) => (
+              <ScrollAnimatedSection key={index} delay={index * 0.1}>
+                <Card3D depth={15}>
+                  <motion.div
+                    className="p-5"
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                      scale: 0.8,
+                      rotateX: 25,
+                      filter: 'blur(12px)',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      rotateX: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{
+                      duration: 1,
+                      delay: index * 0.1,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <h3 className="text-base font-bold mb-1">{value.title}</h3>
+                    <p className="text-white/60 text-xs">{value.desc}</p>
+                  </motion.div>
+                </Card3D>
+              </ScrollAnimatedSection>
             ))}
           </div>
         </div>
