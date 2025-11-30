@@ -728,6 +728,13 @@ interface ScrollAnimatedSectionProps {
   direction?: 'up' | 'down' | 'left' | 'right'
 }
 
+interface DirectionConfig {
+  y: number
+  x: number
+  rotateX?: number
+  rotateY?: number
+}
+
 export function ScrollAnimatedSection({
   children,
   className = '',
@@ -737,14 +744,18 @@ export function ScrollAnimatedSection({
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: '-100px' })
 
-  const directionConfig = {
+  const directionConfig: Record<string, DirectionConfig> = {
     up: { y: 100, x: 0, rotateX: 35 },
     down: { y: -100, x: 0, rotateX: -35 },
     left: { y: 0, x: 100, rotateY: -15 },
     right: { y: 0, x: -100, rotateY: 15 },
   }
 
-  const { y, x, rotateX = 0, rotateY = 0 } = directionConfig[direction]
+  const config = directionConfig[direction]
+  const y = config.y
+  const x = config.x
+  const rotateX = config.rotateX ?? 0
+  const rotateY = config.rotateY ?? 0
 
   return (
     <motion.div
