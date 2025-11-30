@@ -28,7 +28,6 @@ export default function About() {
       <ScrollProgressBar />
       <Header />
 
-      {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center justify-center pt-20">
         <div className="container mx-auto px-4 md:px-8 text-center">
           <ScrollAnimatedSection>
@@ -95,7 +94,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story with 3D Card */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-center">
@@ -178,7 +176,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Values with 3D Cards */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-8">
           <ScrollAnimatedSection className="mb-10">

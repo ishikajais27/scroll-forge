@@ -28,7 +28,6 @@ export default function Contact() {
       <ScrollProgressBar />
       <Header />
 
-      {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center justify-center pt-20">
         <div className="container mx-auto px-4 md:px-8 text-center">
           <ScrollAnimatedSection>
