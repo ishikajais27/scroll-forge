@@ -1,29 +1,24 @@
-# **Website Pages Layout**
+# **Brentley Real Estate Website Pages**
 
-**Home Page (/):** Vertical scroll with horizontal sections  
-**Hero Section:** Full viewport height - horizontal focus  
-**Properties Showcase:** Grid layout - balanced 2-column  
-**Features Section:** 3-column grid - horizontal balance  
-**CTA Section:** Centered - vertical focus
+## **Home Page (`/`)**
 
-**About Page (/about):** Vertical storytelling with image-text pairs  
-**Hero:** Full height - centered vertical  
-**Story Section:** Split 50/50 - horizontal balance  
-**Values Grid:** 4-column - horizontal spread  
-**Team Section:** Cards grid - balanced horizontal
+**What it does:** Shows our best luxury properties right away, Explains why people should choose Brentley, Makes visitors want to see more properties, Gets people interested in working with us  
+**Visitor sees:** Beautiful property photos, Easy buttons to explore, Reasons we're different, Simple way to start looking
 
-**Services Page (/services):** Grid-based with card components  
-**Hero:** Full height - vertical focus  
-**Services Grid:** 2×2 grid - perfect square balance  
-**Service Cards:** Horizontal layout with vertical content  
-**CTA Card:** Centered - vertical emphasis
+## **About Page (`/about`)**
 
-**Contact Page (/contact):** Split-screen with form and image  
-**Hero:** Full height - vertical center  
-**Main Section:** 50/50 split - horizontal balance  
-**Left:** Image - horizontal visual  
-**Right:** Form - vertical flow  
-**Contact Info:** 3-column grid - horizontal spread
+**What it does:** Tells our real story - why we started, Shows the real people behind Brentley, Builds trust and makes us feel human, Shows we know what we're doing  
+**Visitor learns:** Who we are as people, Why we care about real estate, Our team's experience, What matters to us
+
+## **Services Page (`/services`)**
+
+**What it does:** Clearly explains what we offer, Shows how we help buyers, Shows how we help sellers, Explains property management  
+**Visitor understands:** How we help find homes, How we help sell homes, How we take care of properties, What to expect working with us
+
+## **Contact Page (`/contact`)**
+
+**What it does:** Makes it easy to get in touch, Shows where to find us, Provides contact information, Simple form to reach out  
+**Visitor can:** Send a message easily, See our office location, Call or email us, Start a conversation
 
 ---
 
